@@ -1,5 +1,4 @@
 import math
-import sys
 import random
 
 
@@ -14,7 +13,7 @@ def is_prime(num) -> bool :
 
     sqrt = int(math.sqrt(num))
 
-    for divisor in range(3, sqrt, 2):
+    for divisor in range(3, sqrt + 1, 2):
         if num % divisor == 0:
             return False
         
@@ -26,39 +25,38 @@ def gcd(a, b):
         return b
     else: return gcd(b % a, b)
 
-def genRelativePrime(lowerBound, num) -> int:
+def genRelativePrime(num, lowerBound) -> int:
     """Generate a relative prime to num by randomly choosing a number from lowerbound to max int value"""
-    prim = random.randint(lowerBound, sys.maxsize)
+    prim = genPrime(lowerBound, num)
 
-    while gcd(prim, num) != 1:
-        prim = random.randint(num, sys.maxsize)
+    while prim % num == 0:
+        prim = genPrime(lowerBound, num)
 
     return prim
 
-def genPrime(lowerBound) -> int:
+def genPrime(lowerBound, upperBound) -> int:
     """Generate a prime number by randomly choosing a number from lowerbound to max int value"""
 
-    prim = random.randint(lowerBound, sys.maxsize)
+    prim = random.randint(lowerBound, upperBound)
 
-    while not is_prime(genPrime):
-        prim = random.randint(lowerBound, sys.maxsize)
+    while not is_prime(prim):
+        prim = random.randint(lowerBound, upperBound)
 
     return prim
 
 def findMultiplicativeInverse(num1, num2):
-    pass
 
-def euclid_algo(x, y, verbose=True):
-	if x < y: # We want x >= y
-		return euclid_algo(y, x, verbose)
-	print()
-	while y != 0:
-		if verbose: print('%s = %s * %s + %s' % (x, math.floor(x/y), y, x % y))
-		(x, y) = (y, x % y)
-	
-	if verbose: print('gcd is %s' % x) 
-	return x
+    """Return the coffiecent for the samllest linear combination of the two(gcd)"""
+    orignal = num2
+    prev_s, cur_s = 1, 0
+    prev_t, cur_t = 0, 1
 
+    while num2 != 0:
+        qoutient = num1 // num2
+        num1, num2 = num2, num1 % num2
+        prev_s, cur_s = cur_s, prev_s - qoutient * cur_s
+        prev_t, cur_t = cur_t, prev_t - qoutient * cur_t
+    
 
-euclid_algo(150, 120)
+    return prev_s % orignal
 
