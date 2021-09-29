@@ -4,15 +4,16 @@ from prime_artihmetic import genPrime
 
 def main():
 
-    message = "A"
+    message = "my name is dagem tadesse."
 
-    numbered = ""
+    numbered = []
 
     for char in message:
-        numbered += "{}".format(ord(char))
-    numbered = int(numbered)
+        numbered.append(ord(char))
 
-    q = genPrime(numbered, numbered + 100)
+    size = max(numbered)
+
+    q = genPrime(size, size + 100)
     p = genPrime(q + 1, q + 100)
 
     print("p = {}, q = {}".format(p, q))
@@ -27,17 +28,15 @@ def main():
     print("public Key = {}\nprivate Key = {}".format(pubKey, privKey))
 
 
-    encrypted = encrypt(numbered, pubKey, n)
+    encrypted = [ encrypt(i, pubKey, n) for i in numbered ]
 
     
-    decryptedNum = decrypt(encrypted, privKey, n)
+    decryptedNum = [decrypt(i, privKey, n) for i in encrypted  ]
     decrypted = ""
 
 
-    while decryptedNum > 0:
-        decrypted += chr(int(decryptedNum % 100))
-        decryptedNum /= 100
-
+    for asci in decryptedNum :
+        decrypted += chr(asci)
 
     print("encrypted = {0}\ndecrypted = {1}".format(encrypted, decrypted))
 
