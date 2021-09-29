@@ -4,7 +4,7 @@ from prime_artihmetic import genPrime
 
 def main():
 
-    message = "my name is dagem tadesse."
+    message = "My Super Secret message."
 
     numbered = []
 
