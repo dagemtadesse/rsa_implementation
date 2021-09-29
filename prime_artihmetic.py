@@ -37,12 +37,9 @@ def genRelativePrime(num, lowerBound) -> int:
 def genPrime(lowerBound, upperBound) -> int:
     """Generate a prime number by randomly choosing a number from lowerbound to max int value"""
 
-    prim = random.randint(lowerBound, upperBound)
+    primes = [x for x in range (lowerBound, upperBound) if is_prime(x)]
 
-    while not is_prime(prim):
-        prim = random.randint(lowerBound, upperBound)
-
-    return prim
+    return random.choice(primes)
 
 def findMultiplicativeInverse(num1, num2):
 
@@ -59,4 +56,3 @@ def findMultiplicativeInverse(num1, num2):
     
 
     return prev_s % orignal
-
